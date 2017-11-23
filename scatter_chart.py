@@ -18,7 +18,10 @@ with open('config.json', 'r') as infile:
     config = json.loads(infile.read())
 dbloc = config['dbloc']
 
+## Pick colors for people
 colormap ={config['personA']:'red', config['personB']:'blue'}
+
+## Sort offices and people by destination
 def personify(x):
     if x.start == config['AOffice']:
         return config['personA']
@@ -47,10 +50,11 @@ def make_houseplot(data, time):
         houses = list(data.dest.unique())
         pdata = data[(data.hour >= 16) & (data.hour < 19)]
         pdata['house']=pdata.dest
+        
     ##establish column data source
     source = ColumnDataSource(pdata)
+    
     ##establish plot
-
     p = figure(title="Drive Times by House for {time}".format(time=time),\
                x_range=houses, y_range=(0, 75), plot_width=1000, plot_height=800,\
                tools=['hover'])
@@ -66,17 +70,6 @@ def make_houseplot(data, time):
     p.xaxis.major_label_orientation = math.pi/2
        
     return(p) 
-#    #for personA
-#    data_pa= pdata[pdata.person==config['personA']]
-#    print(data_pa.head())
-#    p.circle(data_pa['start'], data_pa['drivetime'], fill_color='#440154',\
-#             size=10)
-#    #for personB
-#    data_pb = pdata[pdata.person==config['personB']]
-#    p.diamond(data_pb['start'], data_pb['drivetime'], fill_color='#35B778',\
-#              size=10)
-    
-
 
 if __name__ == "__main__":
     ### Get my Data and get a subset
