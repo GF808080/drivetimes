@@ -8,25 +8,26 @@
     <script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.7.min.js"></script>
 </head>
 <body>
+
     <div style="width: 100%; display: inline-block;">
         {{ odiv1 | safe }}
         {{ oscript1 | safe }}
     </div>
 
     <div style="width: 100%; display: inline-block;">
-
         {{ odiv2 | safe }}
         {{ oscript2 | safe }}
     </div>
+    
  <h1>Add a New Address to Estimate</h1>
  <form action="{{ url_for('add_house_estimate') }}", method="POST">
      <dl>
          <dt>Address:
          <dd><input type=text name="Address" required/>
-     </dl)
+     </dl>
      <br>
 
-<p><input type=submit value=Enter>
+    <p><input type=submit value=Enter></p>
   </form>    
 </div> 
 </body>
