@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 app = Flask(__name__)
 
+
 ###############################################################################
 ##Pull in the private data
 ###############################################################################
@@ -29,7 +30,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-
 ###############################################################################
 ##Define DB schema in here because that's what flasksqlalchemy wants?
 ###############################################################################
@@ -37,7 +37,6 @@ class houses(db.Model):
     __tablename__ = "houses"
     id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String, unique=True)  
-
 
 class drivetimes(db.Model):
     __tablename__ = "drivetimes"
@@ -53,8 +52,7 @@ class offices(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String)
     person = db.Column(db.String)
-
-        
+       
 class Driveestimates(db.Model):
     __tablename__ = "Driveestimates"
     id = db.Column(db.Integer)
@@ -99,7 +97,6 @@ def add_house():
         return '<h1> House added </h1>'
 
 
-
 ###############################################################################
 ##Track Routes on Select Houses
 ###############################################################################
@@ -118,6 +115,8 @@ def hwy_maps():
     dests =list(data.start.unique())
     return render_template("drivemaps.html", dests=dests, mapskey= jsapikey,
                            title = "Highway Routes", hwy_val='false')    
+    
+    
 ###############################################################################
 ##Track Routes on Select Houses
 ###############################################################################
@@ -143,8 +142,7 @@ def add_house_estimate():
         evening_commute = datetime(2018, 9,25, 17)
         commutes = [morning_commute, evening_commute]
         for time in commutes:
-        ##ne, new DriveEstimate
-            ne=estimate_commutes(address, time)
+            ne=estimate_commutes(address, time) #ne, new DriveEstimate
             toinsert = Driveestimates(address=address,\
                                       AOffice_guess=ne['AOffice_guess'],\
                                       AOffice_traffic=ne['AOffice_traffic'],\
@@ -154,6 +152,8 @@ def add_house_estimate():
             db.session.add(toinsert)
             db.session.commit()
         return '<h1> House added for estimate </h1>'   
+    
+
 # With debug=True, Flask server will auto-reload 
 # when there are code changes
 if __name__ == '__main__':

@@ -1,0 +1,87 @@
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+</style>
+<!DOCTYPE html>
+<H1> {{title}} </H1>
+{% block content %}
+<div id="floating-panel">
+    <b>Start: </b>
+    <select id="start">
+    	{% for dest in dests %}
+		{% if dest == None %}
+			<option selected value="1600 Pennsylvania Avenue, Washington D.C.}">{{ dest }}</option> 
+		{% else %} 
+			<option value="{{ dest }}">{{ dest }}</option> 
+		{% endif %}
+	{% endfor %}
+    </select> 
+    <b>End: </b>
+    <select id="end">
+    {% for dest in dests %}
+		{% if dest == None %}
+			<option selected value="East Capitol St NE & First St SE, Washington, DC 20004">{{ dest }}</option> 
+		{% else %} 
+			<option value="{{ dest }}">{{ dest }}</option> 
+		{% endif %}
+	{% endfor %}
+    </select>
+    </div>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 38.900855, lng: -77.187662}
+        });       
+        directionsDisplay.setMap(map);
+        var onChangeHandler = function() {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        };
+        document.getElementById('start').addEventListener('change', onChangeHandler);
+        document.getElementById('end').addEventListener('change', onChangeHandler);
+      }
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        directionsService.route({
+          origin: document.getElementById('start').value,
+          destination: document.getElementById('end').value,
+          travelMode: 'DRIVING',
+          avoidHighways: {{hwy_val}}
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+    </script>
+    <script async defer
+    src={{mapskey}}>
+    </script>
+{% endblock content %}
+<H1 align=Center> <a href="{{ url_for('index') }}">Home</a></H1>

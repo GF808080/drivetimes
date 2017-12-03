@@ -82,15 +82,7 @@ def estimate_commutes(new_address, time):
         return(Driveestimates)
 
         
-#def insert_address(new_address):
-#        from sqlSetup import Houses
-#        #set up sqlalchemy stuff
-#        engine = create_engine(config['dbloc'], echo=True)
-#        connection = engine.connect()
-#        ###
-#        insAddress = Houses.insert().values(address=new_address)
-#        connection.execute(insAddress)
-        
+
 ##########
 ## Function independent of app
 ##########        
