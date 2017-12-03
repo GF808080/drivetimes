@@ -86,16 +86,18 @@ def index():
 
 @app.route('/add_house', methods=['GET', 'POST'])
 def add_house():
-    if request.method == 'GET':
-        return render_template('add_house.html')
-    else:
+#    if request.method == 'GET':
+#        return render_template('add_house.html')
+#    else:
+    try:
         address=request.form["Address"]
         print(address)
         toinsert = houses(address=address)
         db.session.add(toinsert)
         db.session.commit()
         return '<h1> House added </h1>'
-
+    except:
+        return '<h1> Couldnt add house </h1>'
 
 ###############################################################################
 ##Track Routes on Select Houses
@@ -132,9 +134,10 @@ def all_estimates():
 
 @app.route('/add_house_estimate', methods=['GET', 'POST'])
 def add_house_estimate():
-    if request.method == 'GET':
-        return render_template('add_house.html')
-    else:
+#    if request.method == 'GET':
+#        return render_template('add_house.html')
+#    else:
+    try:
         address=request.form["Address"]
         print(address)
             ### set a basic morning time and evening times for commutes
@@ -152,7 +155,8 @@ def add_house_estimate():
             db.session.add(toinsert)
             db.session.commit()
         return '<h1> House added for estimate </h1>'   
-    
+    except:
+        return '<h1> Couldnt add house. Duplicate? </h1>'  
 
 # With debug=True, Flask server will auto-reload 
 # when there are code changes
