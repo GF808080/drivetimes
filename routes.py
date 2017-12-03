@@ -125,9 +125,11 @@ def hwy_maps():
 def all_estimates():
     conn = db.engine.connect().connection
     data= pd.read_sql("SELECT * FROM Driveestimates", con=conn)
-    p=show_estimates(data)
-    oscript, odiv = components(p)
-    return render_template('estimates.html', oscript=oscript, odiv=odiv)
+    p1, p2=show_estimates(data)
+    oscript1, odiv1 = components(p1)
+    oscript2, odiv2 = components(p2)
+    return render_template('estimates.html', oscript1=oscript1,\
+                           odiv1=odiv1, oscript2=oscript2, odiv2=odiv2)
 
 @app.route('/add_house_estimate', methods=['GET', 'POST'])
 def add_house_estimate():
