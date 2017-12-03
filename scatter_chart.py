@@ -103,8 +103,7 @@ def show_estimates(data):
     ## Make Tooltips
     ##establish amplot
     p1 = figure(title="Morning Drive Estimates From Google",\
-               x_range=houses, y_range=(0, 75), \
-                tools=['hover'])
+               x_range=houses, y_range=(0, 75))
     
     ama = p1.scatter("address", config['personA']+'_traffic', color='color',\
               marker='inverted_triangle', source=sourceAM, size=10,)
